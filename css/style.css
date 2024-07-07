@@ -1,0 +1,676 @@
+/* Makes a reset css - the '*' selects all except for the elements before and after */
+
+*, ::before, ::after {
+    /* for the paddings and borders (for the width and height of the elements)  */
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    /* adds smooth scrolls */
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f1f1f1;
+}
+
+
+/*--------------Navigation--------------*/
+
+.nav-gauche {
+    width: 300px;
+    height: 100vh;
+    /* to limit the height of the navbar when the page of the navigator is reduced */
+    min-height: 800px;
+    background: #333;
+    /* it stays fixed on the left anytime */
+    position: fixed;
+    top: 0;
+    left: -300px;
+    border-right: 1px dashed #f1f1f1;
+    /* puts the navbar above */
+    z-index: 5;
+    /* for a slidding effect */
+    transition : all 0.2s ease-in-out;
+    
+}
+
+.blocs-menu {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blocs-menu span {
+    font-size: 19px;
+    text-align: center;
+    /* A pseudo element will be in position 'absolute',while the span is in position 'relative' */
+    /*in order for the pseudo-element to adapt to the relative position of its paren */
+    position: relative;
+    /* Usually goes from 200 to 900, but i want 700px */ 
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.blocs-menu span a {
+    text-decoration: none;
+    color: #f1f1f1;
+}
+
+.blocs-menu span::after {
+    /* must be initialized by '' empty for it to exist */
+    content : '';
+    display: block;
+    /* starts at 0px before animation */
+    width: 0px;
+    /* auto on R and L for the animation */
+    margin: 5px auto 0 auto;
+    height: 2px;
+    border-radius: 2px;
+    /* a line for the animation */
+    background: #aaa;
+    /* transition: all is used to transition all properties ; ease-out slower in the end */
+    transition: all 0.2s ease-out;
+}
+
+/* When the cursor is above i use the animation */
+.blocs-menu span:hover::after {
+    /* takes 100% of the width of the content (the words) */
+    width: 100%;
+
+}
+
+
+/* -----------Picture ----------*/
+
+/* To target the first child of .blocs-menu */
+.blocs-menu:nth-child(1) {
+    width: 100%;
+    height: 25%;
+    background: #333;
+}
+
+
+
+
+/* for all screen, and the maximum width */
+@media screen and (max-width: 1300px) {
+    
+    /* will be toggled */
+    .nav-gauche {
+        /* To specify it MUST start at -300px */
+        left: -300px!important;
+
+        width: 250px;
+        min-height: 300px;
+
+        /* All is centered */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 7;
+    }
+
+    div.cercle-portait, img.portrait-img {
+        min-height:159px;
+        min-width:124px;
+        max-height:159px;
+        max-width:124px;
+    }
+
+    .menu-visible {
+        left: 0px!important;
+    }
+
+    
+
+    .btn-rond-menu {
+        width: 60px;
+        height: 60px;
+        border: 1px solid #f1f1f1;
+        border-radius: 50%;
+        background: #333;
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        z-index : 10;
+    }
+
+
+    .cont-ligne {
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        /* its parent btn-rond-menu is in position fixed */
+        position: absolute;
+        /* position of the toggle button lines */
+        top: 20%;
+        left: 20%;
+        transform: translate (-50%,-50%);
+    }
+
+    .ligne-unique {
+        width: 100%;
+        height: 4px;
+        /* little ronded angles */
+        border-radius: 5px;
+        background: #f1f1f1;
+        position: absolute;
+        top:50%;
+        left:50%;
+        transform: translate(-50%,-50%);
+    }
+
+    .ligne-unique::before {
+        content: '';
+        position: absolute;
+        bottom: 10px;
+        background: #f1f1f1;
+        width: 100%;
+        height: 4px;
+        border-radius: 5px;
+
+    }
+
+
+    .ligne-unique::after {
+        content: '';
+        position: absolute;
+        top: 10px;
+        background: #f1f1f1;
+        width: 100%;
+        height: 4px;
+        border-radius: 5px;
+
+    }
+
+    /* when the class active is added */
+    /* the ligne-unique is targeted -> */ 
+
+    .cont-ligne.active .ligne-unique::after {
+
+        /*go up on the ligne-unique */
+        top:0;
+
+        /* rotated of a 45d angle one side of the crossed lines */
+        transform: rotate(45deg);
+
+        /* timelapse, for smooth transition, delayed 300ms */
+        transition: top 300ms ease, transform 300ms 300ms ease;
+    }
+
+    .cont-ligne.active .ligne-unique {
+        /* made unseen */
+        background: transparent;
+    }
+
+    .cont-ligne.active .ligne-unique::before {
+        /*go down on the ligne-unique */
+        bottom:0;
+
+        /* rotated of a -45d angle one side of the crossed lines */
+        transform: rotate(-45deg);
+        transition: bottom 300ms ease, transform 300ms 300ms ease;
+    }
+
+
+}
+
+
+
+
+@media screen and (max-height: 800px) {
+    
+    .blocs-menu:nth-child(1) {
+        display: none;
+    }
+
+    
+    .blocs-menu:nth-child(7) {
+        display: none;
+    } 
+    
+    div.blocs-menu {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 30px;
+        padding-top: 30px;
+    }
+
+}
+.cercle-portait {
+    margin:20px 0;
+    width: 100px; 
+    height: 100px; 
+    /* hides the parts of the picture */
+    overflow: hidden; 
+    /* shape of my pic */
+    border-radius: 40%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    /* on x on y blurred color  for the shadow effect */
+    box-shadow: 26px 26px 50px #848684,
+        -26px -26px 50px #3c3b3b;
+    
+    
+}
+
+
+ 
+.cercle-portrait img {
+    width: 100%; 
+    height: 100%;
+    /* The pic covers everything */
+    object-fit: cover; 
+  
+
+}
+
+div.cercle-portait {
+    width: 50%;
+    height: 80%;
+}
+
+
+.logo-cercle {
+    width: 10px;
+    height: 100px;
+    border-radius:50%;
+    position: absolute;
+    bottom:40px;
+    cursor: pointer;
+}
+
+.logo-cercle img {
+    width: 70px;
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+}
+
+
+
+div.cercle-portait, img.portrait-img {
+    z-index: 7;
+}
+
+
+
+/*-------------Home----------------*/
+
+.accueil {
+    background: url('/ressources/accueil.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* The picture is on the right */
+    background-position: right;
+    height: 100vh;
+    min-height: 900px;
+    /* 300px is the width of menu */
+    /* margin on left of 300px */
+    width:calc(100% -300px);
+    margin-left: auto;
+    position: relative;
+}
+
+h1 {
+    font-size: 90px;
+    font-family: 'Abril Fatface', sans-serif;
+    margin: 0 60px;
+    padding-top: 210px;
+}
+
+
+.txt-animation {
+    font-size: 30px;
+    margin: 10px 0 10px 60px;
+}
+
+.btn-acc, .btn-rond {
+    /* to use flexbox text inside */
+    display:inline-flex;
+    width: 200px;
+    height: 50px;
+    text-decoration: none;
+    background: #000;
+    justify-content:center;
+    align-items: center;
+    color:#f1f1f1;
+    margin: 10px 0 0 0;
+    border-radius: 2px;
+    font-size: 18px;
+   
+}
+
+
+.btn-rond {
+    
+    width: 70px;
+    height: 70px;
+    background: #000;
+    border-radius: 50px;
+}
+
+
+.btn-acc1, .btn-rond {
+    margin: 10px 0 0 60px;
+}
+
+.btn-acc2 {
+    background: transparent;
+    border:2px solid black;
+    color: black;
+    font-weight: 700;
+}
+
+.logo-btn-rond-acc {
+    width:50px;
+    height: 50px;
+    
+    padding-left:20px;
+
+   
+}
+
+
+
+.medias {
+    display: flex;
+    margin-left: 90px;
+    margin-top: 50px;
+      
+}
+
+.media {
+    width: 60px;
+    height:60px;
+    background:#b6afaf;
+    /* Circle of */
+    border-radius:50%;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    left: 90%;
+    top:90%;
+}
+
+.media2 {
+    background: transparent;
+    border: 2px solid #333;
+    
+}
+
+.icone-medias {
+    /* positions of the icons inside the circle */
+    width: 30px;
+    margin-top: 12px;
+    margin-left: 12px;
+}
+
+img.icone-medias {
+    width:34px;
+    height:34px;
+}
+
+
+.btn-rond {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    bottom: 20px;
+    left: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 0 0 0  #333;
+    background: #333;
+    animation: pulse 1.3s infinite;
+
+}
+
+
+@keyframes pulse {
+    to {
+        /* animation around the arrow */
+        box-shadow: 0 0 0 8px rgba(255, 255, 255,0.01);
+    }
+    
+}
+
+.logo-btn-rond-acc {
+    width: 50px;
+    /* arrow v middle */
+    margin-right: 17px;
+    
+}
+
+
+
+
+/* Media accueil */
+
+@media screen and (max-width:1300px) {
+    .accueil {
+        width: 100%;
+        background-position: center;
+
+    }
+}
+
+
+
+@media screen and (max-width:1000px) {
+
+    .accueil {
+        height: 700px;
+        min-height: 0;
+    }
+
+    h1 {
+        font-size: 70px;
+        margin: 0 30px;
+        padding-top: 100px;
+    }
+
+
+    .txt-animation {
+        font-size: 20px;
+        margin: 7px 0 7px 45px;
+    }   
+    .accueil p {
+        margin: 20px 0 20px 30px;
+    }
+
+    .btn-acc1 {
+        margin: 10px 0 0 30px;
+    }
+
+
+    .medias {
+        margin-left:30px;
+    }
+
+    .btn-rond {
+        display: none;
+    }
+
+
+}
+
+@media screen and (max-width:700px) {
+    .accueil {
+        height: 600px;
+    }
+
+    h1 {
+        font-size: 50px;
+        margin: 0 30px;
+    }
+
+    .accueil p {
+        font-size: 20px;
+    }
+
+    .btn-rond-menu {
+        width:45px;
+        height:45px;
+    }
+
+
+    .cont-ligne {
+        width: 20px;
+        height:20px;
+        top:25%;
+        left:25%;
+    }
+}
+
+@media screen and (max-width:500px) {
+
+    h1 {
+        font-size: 35px;
+    }
+
+    .accueil p {
+        font-size: 16px;
+    }
+    
+    .btn-acc {
+        width: 120px;
+        font-size: 13px;
+        height: 40px;
+        margin: 10px 0 0 5px;
+    }
+
+    .btn-acc1 {
+        margin: 10px 0 0 30px;
+    }
+
+    .media {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icone-medias {
+        width: 20px;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+    img.icone-medias {
+        width:19px;
+        height:19px;
+    }
+
+    .btn-rond-menu {
+        width:45px;
+        height: 45px;
+    }
+
+}
+
+
+
+@media screen and (max-width:390px) {
+    .cont-ligne { 
+        width: 20px;
+        height: 20px;
+        margin-left: 3px;
+        margin-top: 3px;
+    }
+
+    .media1, .media2, .media3 {
+        width: 50px;
+        height:50px;
+    }
+
+    .icone-medias {
+        width: 10px;
+        height: 10px;
+        margin-top: 5px;
+        margin-left: 7px;
+    }
+
+    .btn-rond-menu {
+        width: 50px;
+        height: 50px;
+    }
+
+
+    .btn-acc2 {
+        padding-left:3 px;
+    }
+}
+
+
+
+@media screen and (max-width:400px) {
+
+
+    h1 {
+        font-size: 35px;
+        margin: 0 30px;
+    }
+
+    .btn-acc2 {
+        margin-left: 3px;
+    }
+
+
+    .media1, .media2, .media3 {
+        width: 40px;
+        height:40px;
+    }
+
+    .icone-medias {
+        width: 30%;
+        height: 30%;
+        margin-top: 10px;
+        margin-left: 10px;
+    }
+
+
+    img.icone-medias {
+        width:19px;
+        height:19px;
+    }
+
+    .ligne-unique {
+        bottom: px;
+    }
+
+}
+
+
+
+
+@media screen and (max-width:275px) {
+    .btn-acc2 {
+        margin-left: 30px;
+
+    }
+
+    .cont-ligne { 
+        width: 10px;
+        height: 10px;
+        margin-left: 4px;
+        margin-top: 5px;
+    }
+
+
+    .btn-rond-menu {
+        width: 35px;
+        height: 35px;
+    }
+}
